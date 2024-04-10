@@ -4,4 +4,4 @@
 
 ## Clas Diagram
 
-![Class Entity Diagram](Tic Toc Toe.drawio.png)
+![Class Entity Diagram](Tic-Toc-Toe.png)
