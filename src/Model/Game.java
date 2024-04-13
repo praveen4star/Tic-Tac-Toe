@@ -2,6 +2,7 @@ package Model;
 
 import exception.InvalidBotCountException;
 import exception.InvalidDimensionException;
+import exception.InvalidPlayerCountException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,15 +15,48 @@ public class Game {
     private Player winner;
     private int nextPlayerIndex;
     private List<Move> moves;
-    private GameStatus status;
+    private GameState state;
     private List<WinningStrategy> winningStrategies;
+
+
     private Game(Board board, List<Player> playerList, List<WinningStrategy> winningStrategies){
         this.board = board;
         this.playerList = playerList;
         this.winningStrategies = winningStrategies;
-        this.status = GameStatus.IN_PROGRESS;
+        this.state = GameState.IN_PROGRESS;
         this.nextPlayerIndex = 0;
         this.moves = new ArrayList<>();
+    }
+
+    public void setNextPlayerIndex(int nextPlayerIndex) {
+        this.nextPlayerIndex = nextPlayerIndex;
+    }
+    public void addMove(Move move){
+        moves.add(move);
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public int getNextPlayerIndex() {
+        return nextPlayerIndex;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public static GameBuilder getGameBuilder(){
+        return new GameBuilder();
     }
     public static class GameBuilder{
         private int dimension;
@@ -39,6 +73,14 @@ public class Game {
         }
         public GameBuilder addPlayer(Player player){
             this.playerList.add(player);
+            return this;
+        }
+        public GameBuilder setPlayerList(List<Player> playerList){
+            this.playerList = playerList;
+            return this;
+        }
+        public GameBuilder setWinningStrategy(List<WinningStrategy> winningStrategies){
+            this.winningStrategies = winningStrategies;
             return this;
         }
         public GameBuilder addWinningStrategy(WinningStrategy winningStrategy){
@@ -71,15 +113,20 @@ public class Game {
                 throw new IllegalArgumentException("Player symbols must be unique");
             }
         }
+        private void validateNumberOfPlayers(){
+            if(playerList.size() < 2 || playerList.size() > dimension-1){
+                throw new InvalidPlayerCountException("Invalid number of players");
+            }
+        }
         private void validator(){
             validateDimension();
             validateBotCount();
             validateUniquePlayerSymbol();
+            validateNumberOfPlayers();
         }
         public Game build(){
             validator();
-            board = new Board(dimension);
-            return new Game(board, playerList, winningStrategies);
+            return new Game(new Board(dimension), playerList, winningStrategies);
         }
     }
 }
