@@ -11,3 +11,11 @@ public class OrderOneWinningStrategy implements WinningStrategy {
         return null;
     }
 }
+
+/**
+ * row wise winner
+ * column wise winner
+ * diagonal wise winner
+ * anti-diagonal wise winner
+ * corner wise winner
+ * */
