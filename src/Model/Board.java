@@ -21,5 +21,7 @@ public class Board {
     public List<List<Cell>> getCells() {
         return cells;
     }
-
+    public int getSize() {
+        return size;
+    }
 }
