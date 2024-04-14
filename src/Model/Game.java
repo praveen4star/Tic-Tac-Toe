@@ -31,6 +31,23 @@ public class Game {
     public void setNextPlayerIndex(int nextPlayerIndex) {
         this.nextPlayerIndex = nextPlayerIndex;
     }
+
+    public List<WinningStrategy> getWinningStrategies() {
+        return winningStrategies;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
     public void addMove(Move move){
         moves.add(move);
     }

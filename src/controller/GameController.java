@@ -28,6 +28,22 @@ public class GameController {
         Player player = game.getPlayerList().get(nextPlayerIndex);
         Move move = player.makeMove(game.getBoard());
         game.addMove(move);
+        game.setNextPlayerIndex((nextPlayerIndex+1)%game.getPlayerList().size());
+        checkWinner(game, move);
+
+    }
+    private void checkWinner(Game game, Move move){
+        for(WinningStrategy winningStrategy: game.getWinningStrategies()){
+            if(winningStrategy.checkWinner(game.getBoard(), move)){
+                game.setWinner(move.getPlayer());
+                game.setState(GameState.SUCCESS);
+                break;
+            }
+        }
+        if(game.getMoves().size() == (game.getBoard().getSize() * game.getBoard().getSize())){
+            game.setState(GameState.DRAW);
+        }
+
     }
     public Player getWinner(Game game){
         return game.getWinner();

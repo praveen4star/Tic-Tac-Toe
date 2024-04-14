@@ -37,14 +37,12 @@ public class Cell {
     }
 
     public void display(){
-        if(state.equals(CellState.EMPTY)){
+        if(player == null){
             System.out.print("| |");
-        }
-        else if(state.equals(CellState.BLOCKED)){
-            System.out.print("|||");
-        }
-        else{
-            System.out.print('|'+player.getSymbol().getSymbolChar()+'|');
+        } else if(state.equals(CellState.BLOCKED)){
+            System.out.print("||||");
+        } else {
+            System.out.print("|" + player.getSymbol().getSymbolChar()+ "|");
         }
     }
 }

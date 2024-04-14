@@ -1,5 +1,5 @@
 package Model;
 
 public interface WinningStrategy {
-    public Player checkWinner(Board board, Move lastMove);
+    public boolean checkWinner(Board board, Move lastMove);
 }
